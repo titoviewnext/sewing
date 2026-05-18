@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "Sewing",
+    "version": "1.0.0",
+    "description": "Enterprise sewing & tailoring management platform",
+    "stack": {
+      "frontend": "React + TypeScript + TailwindCSS",
+      "backend": "Node.js + Express + TypeScript",
+      "database": "PostgreSQL + Prisma ORM",
+      "auth": "JWT + bcrypt",
+      "testing": "Jest + Supertest",
+      "ci": "GitHub Actions"
+    },
+    "modules": [
+      "auth",
+      "customers",
+      "orders",
+      "measurements",
+      "inventory",
+      "appointments",
+      "invoices"
+    ],
+    "agents": [
+      { "name": "AuthAgent", "responsibility": "Authentication & authorization" },
+      { "name": "CustomerAgent", "responsibility": "Customer CRUD & profiles" },
+      { "name": "OrderAgent", "responsibility": "Order lifecycle management" },
+      { "name": "MeasurementAgent", "responsibility": "Customer measurements storage" },
+      { "name": "InventoryAgent", "responsibility": "Fabric & supplies tracking" },
+      { "name": "AppointmentAgent", "responsibility": "Scheduling & reminders" },
+      { "name": "InvoiceAgent", "responsibility": "Billing & payment tracking" }
+    ],
+    "endpoints": {
+      "auth": ["POST /auth/register", "POST /auth/login"],
+      "customers": ["GET /customers", "POST /customers", "GET /customers/:id", "PUT /customers/:id", "DELETE /customers/:id"],
+      "orders": ["GET /orders", "POST /orders", "GET /orders/:id", "PUT /orders/:id", "DELETE /orders/:id"],
+      "measurements": ["GET /measurements/:customerId", "POST /measurements", "PUT /measurements/:id"],
+      "inventory": ["GET /inventory", "POST /inventory", "GET /inventory/:id", "PUT /inventory/:id", "DELETE /inventory/:id"],
+      "appointments": ["GET /appointments", "POST /appointments", "GET /appointments/:id", "PUT /appointments/:id", "DELETE /appointments/:id"],
+      "invoices": ["GET /invoices", "POST /invoices", "GET /invoices/:id", "PUT /invoices/:id", "DELETE /invoices/:id"]
+    }
+  }
+}
