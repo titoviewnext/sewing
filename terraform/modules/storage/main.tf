@@ -14,6 +14,11 @@ variable "environment" {
   type = string
 }
 
+variable "postgresql_admin_password" {
+  type      = string
+  sensitive = true
+}
+
 locals {
   storage_account_name = substr(lower(replace("${var.project_name}${var.environment}st", "-", "")), 0, 24)
 }
@@ -40,7 +45,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
   sku_name            = "B_Standard_B1ms"
 
   administrator_login    = "pgadmin"
-  administrator_password = "ChangeM3Now!"
+  administrator_password = var.postgresql_admin_password
 
   storage_mb = 32768
 }

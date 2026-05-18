@@ -2,7 +2,7 @@ import type { DSLProject } from '../dsl/dsl-schema';
 
 export class ArchitectAgent {
   private readonly systemPrompt =
-    'You are the ArchitectAgent. ALWAYS produce structured DSL JSON. NEVER generate direct source code.';
+    'Eres ArchitectAgent. SIEMPRE debes generar DSL estructurado en JSON. NUNCA generes código fuente directo.';
 
   async generateDSL(userDescription: string): Promise<DSLProject> {
     const endpoint = process.env.AZURE_OPENAI_ENDPOINT;

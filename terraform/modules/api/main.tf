@@ -65,5 +65,5 @@ resource "azurerm_linux_function_app" "this" {
 }
 
 output "function_app_url" {
-  value = azurerm_linux_function_app.this.default_hostname
+  value = "https://${azurerm_linux_function_app.this.default_hostname}"
 }

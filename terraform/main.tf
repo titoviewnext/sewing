@@ -17,6 +17,7 @@ module "storage" {
   resource_group_name = azurerm_resource_group.this.name
   project_name        = var.project_name
   environment         = var.environment
+  postgresql_admin_password = var.postgresql_admin_password
 }
 
 module "ai" {

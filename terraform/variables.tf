@@ -21,3 +21,9 @@ variable "project_name" {
   type        = string
   default     = "ai-builder"
 }
+
+variable "postgresql_admin_password" {
+  description = "Administrator password for PostgreSQL flexible server"
+  type        = string
+  sensitive   = true
+}
