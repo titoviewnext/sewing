@@ -1,0 +1,25 @@
+{
+  "name": "task-app",
+  "version": "1.0.0",
+  "description": "Simple task management application",
+  "entities": [
+    {
+      "name": "Task",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "description", "type": "string" },
+        { "name": "completed", "type": "boolean", "required": true },
+        { "name": "createdAt", "type": "date", "required": true }
+      ]
+    }
+  ],
+  "frontend": {
+    "pages": ["list", "create", "detail"],
+    "framework": "nextjs"
+  },
+  "backend": {
+    "type": "rest",
+    "framework": "nestjs"
+  }
+}
