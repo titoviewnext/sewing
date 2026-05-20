@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  id           String        @id @default(cuid())
+  name         String
+  email        String?       @unique
+  phone        String?
+  address      String?
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  orders       Order[]
+  measurement  Measurement?
+  appointments Appointment[]
+  invoices     Invoice[]
+}
+
+enum OrderStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  customerId  String
+  description String
+  status      OrderStatus @default(NEW)
+  dueDate     DateTime?
+  price       Float?
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  customer    Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  invoices    Invoice[]
+}
+
+model Measurement {
+  id            String   @id @default(cuid())
+  customerId    String   @unique
+  chest         Float?
+  waist         Float?
+  hips          Float?
+  shoulders     Float?
+  sleeveLength  Float?
+  inseam        Float?
+  height        Float?
+  weight        Float?
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+model InventoryItem {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  quantity    Int
+  unit        String
+  costPerUnit Float?
+  supplier    String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  customerId  String
+  scheduledAt DateTime
+  duration    Int?
+  status      AppointmentStatus @default(SCHEDULED)
+  purpose     String
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  customer    Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+}
+
+model Invoice {
+  id         String        @id @default(cuid())
+  customerId String
+  orderId    String?
+  status     InvoiceStatus @default(DRAFT)
+  amount     Float
+  dueDate    DateTime?
+  notes      String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  customer   Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  order      Order?        @relation(fields: [orderId], references: [id], onDelete: SetNull)
+}
